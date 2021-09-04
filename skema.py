@@ -4,9 +4,6 @@ class day():
 
 	def Mandag(self, clock=""):
 		#print(clock, "ASS")
-		if clock in self.kl:
-			print("ASS")
-			print()
 		mandag  = ["Runde1", "Matematik", "Dansk1","Dansk2", "IU1", "IU2","Runde2"]
 		for lects in mandag:
 			inx = mandag.index(lects)
@@ -42,7 +39,10 @@ def timer(dag="",NextDay=False, clock="08.30"):
 	days 	= ["Mon", "Tue", "Wed", "Thu", "Fri"]
 	daDays  = ["Man", "Tir", "Ons", "Tor", "Fre"]
 	if NextDay == True:
-		print(f"Showing {tomorrow.strftime('%a')}")
+		if tomorrow.strftime('%a') not in days:
+			print("showing Mon")
+		else:
+			print(f"Showing {tomorrow.strftime('%a')}")
 	else:
 		print(f"showing {dag}")
 	if dag in days or dag in daDays and NextDay == False:
@@ -63,9 +63,7 @@ def timer(dag="",NextDay=False, clock="08.30"):
 	elif dag not in days or dag not in daDays:
 		print(f"Sorry, the day \"{dag}\" does not exist!")
 		exit()
-	elif NextDay == True:
-		pritn("hej")
-
+	
 
 import sys
 import time
@@ -79,25 +77,20 @@ timeOfDay = time.ctime()[10:16]
 _days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
 clock = time.ctime()[11:16]
 
+
 print(f"DATE: {date}\n"
 		f"TIME: {timeOfDay}\n")
 
-try:
 
-	userDay = sys.argv[1].capitalize()
-	
-	if userDay != "Next":
-		timer(userDay)
-	else:
-		#try:
-		nextDay = _days.index(nowday) +1 
-		#except IndexError as IE:
-			#nextDay = _days[0]
-		timer(_days[nextDay], NextDay=True,clock=clock)
-	
+userDay = sys.argv[1].capitalize()
+
+if userDay == "Next":
+	if nowday not in _days:
+		nowday = "Mon"
+	nextDay = _days.index(nowday) +1 
+	timer(_days[nextDay], NextDay=True,clock=clock)
+
+elif userDay != "Next":
+	timer(userDay)
 
 
-except IndexError:
-	timer(nowday)
-except ValueError:
-	print(userDay)
