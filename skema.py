@@ -81,16 +81,17 @@ clock = time.ctime()[11:16]
 print(f"DATE: {date}\n"
 		f"TIME: {timeOfDay}\n")
 
+try:
+	userDay = sys.argv[1].capitalize()
 
-userDay = sys.argv[1].capitalize()
+	if userDay == "Next":
+		if nowday not in _days:
+			nowday = "Mon"
+		nextDay = _days.index(nowday) +1 
+		timer(_days[nextDay], NextDay=True,clock=clock)
 
-if userDay == "Next":
-	if nowday not in _days:
-		nowday = "Mon"
-	nextDay = _days.index(nowday) +1 
-	timer(_days[nextDay], NextDay=True,clock=clock)
-
-elif userDay != "Next":
-	timer(userDay)
-
+	elif userDay != "Next":
+		timer(userDay)
+except IndexError:
+	timer(nowday)
 
